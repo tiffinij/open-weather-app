@@ -8,7 +8,7 @@ import WeatherForecast from "./components/WeatherForecast";
 function App() {
     return (
         <div>
-            <h1>5-Day Weather Forecast</h1>
+            <h1>Current Weather: </h1>
             <WeatherForecast />
         </div>
     );
