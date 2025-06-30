@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "",
+  "homepage": "https://tiffinij.github.io/open-weather-app/",
   "scripts": {
     "dev": "vite",
     "deploy": "gh-pages -d dist",
