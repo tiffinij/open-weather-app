@@ -38,3 +38,4 @@ coverage/          # Coverage reports from testing
 *.tmp
 /backend/node_modules
 /backend/dist
+/frontend/node_modules
