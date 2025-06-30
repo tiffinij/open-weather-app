@@ -1,13 +1,15 @@
-name: Deploy React App
+# This workflow will do a clean installation of node dependencies, cache/restore them,
+# build the source code (including TypeScript), and run tests across different versions of Node.js.
+# Successful Node.js GitHub Actions gtihub pages configuration using React frontend with Typescript
+
+
+name: Node.js CI with GitHub Pages Deployment
 
 on:
   push:
     branches: ["prod", "dev"]
   pull_request:
     branches: ["prod"]
-
-permissions:
-  contents: write
 
 jobs:
   build:
@@ -18,13 +20,14 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [20.x]
+        node-version: [23.x]
+        # List of Node.js versions to test
 
     steps:
       - name: Checkout the code
         uses: actions/checkout@v4
         
-      - name: Set up Node.js
+      - name: Set up Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
@@ -34,10 +37,21 @@ jobs:
       - name: Install dependencies
         run: npm ci
         
-      - name: Build
+      - name: Install TypeScript globally (optional)
+        run: npm install -g typescript
+      
+      - name: Build the TypeScript project
         run: npm run build
 
-      - name: Deploy
-        run: npx gh-pages -d build
+      - name: Check build directory
+        run: ls -la build
+
+      # - name: Run tests
+      #   run: npm test
+
+      - name: Deploy with gh-pages
+        run: |
+            git remote set-url origin https://git:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+            npx gh-pages -d build -u "github-actions-bot <support+actions@github.com>"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Ensure this line points to the correct token
