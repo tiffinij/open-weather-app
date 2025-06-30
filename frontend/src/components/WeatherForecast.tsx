@@ -15,7 +15,7 @@ const WeatherForecast = () => {
             const response = await axios.get(
                 `https://open-weather-app-prod.onrender.com/weather/${zip}`
             );
-            setWeather(response.data.list);
+            setWeather(response.data);
         } catch (error) {
             console.error("Error fetching weather:", error);
         }
@@ -30,8 +30,7 @@ const WeatherForecast = () => {
                 placeholder="Enter ZIP Code"
             />
             <button onClick={fetchWeather}>Get Weather</button>
-            {weather &&
-                weather.map((day: any) => <WeatherCard key={day.dt} day={day} />)}
+            {weather && <WeatherCard currentWeather={weather} />}
         </div>
     );
 };
